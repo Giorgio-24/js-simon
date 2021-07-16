@@ -1,7 +1,9 @@
 //=VARIABLES AND FUNCTIONS.
-var timerStartingAt = 3;
+var timerStartingAt = 30;//^INDICATES HOW MUCH TIME(IN SECONDS) IS NEEDED BEFORE THE TIMER ENDS.
 
-var maxElements = 5;
+var maxElements = 5;//^MAX LENGHT OF THE NUMBER LIST.
+
+var maxGenerableNumber = 100;//^MAX NUMBER THAT CAN BE GENERATE FROM MATH.RANDOM() FUNCTION.
 
 var showCountdown = document.getElementById('reverse-timer');
 
@@ -13,7 +15,7 @@ pushRandomNumbers(numbersList);
 function pushRandomNumbers(nlist) {//^PUSHING RANDOM NUMBERS INSIDE THE ARRAY.
 
     while (nlist.length < maxElements) {
-        var numGenerator = Math.floor(Math.random() * 100) + 1;
+        var numGenerator = Math.floor(Math.random() * maxGenerableNumber) + 1;
         if (!(nlist.includes(numGenerator))) {
             nlist.push(numGenerator);
         }
@@ -42,8 +44,9 @@ function afterCountdown() {
     var rightUserNumbers = [];
     var remembered = 0;
     for (i = 0; i < maxElements; i++) {
-        var askUser = parseInt(prompt('Inserisci un numero della lista ' + (i + 1) + '/' + maxElements));
-
+        do {
+            var askUser = parseInt(prompt('Inserisci un numero della lista ' + (i + 1) + '/' + maxElements));
+        } while (!(askUser) || isNaN(askUser) || askUser > maxGenerableNumber || askUser < 1 || userNumbers.includes(askUser));
         if (numbersList.includes(askUser)) {
             rightUserNumbers.push(askUser);
             remembered++;
