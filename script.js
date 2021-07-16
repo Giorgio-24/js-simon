@@ -1,3 +1,4 @@
+//=VARIABLES AND FUNCTIONS.
 var timerStartingAt = 3;
 
 var maxElements = 5;
@@ -19,39 +20,50 @@ function pushRandomNumbers(nlist) {//^PUSHING RANDOM NUMBERS INSIDE THE ARRAY.
     }
 };
 
+//=NUMBERS TO REMEMBER.
+
 console.log(numbersList);
 alert('Ricordati questi numeri: ' + numbersList + '.');
 
-//=PROMPT SECTION.
+showCountdown.innerHTML = 'Tra ' + timerStartingAt-- + ' secondi dovrai inserire i numeri della lista.';
 
-var question = [];
-
-setTimeout(askNumbers, timerStartingAt * 1000);
-
-
-function askNumbers() {
-    for (var i = 0; i < maxElements; i++) {
-        insert = parseInt(prompt('Metti numeri.'));
-        question.push(insert)
-    }
-    console.log(question);
-};
-
-//=COUNTDOWN SECTION.
-
-showCountdown.innerHTML = 'Tra ' + timerStartingAt-- + ' secondi dovrai inserire i numeri.';
-
-setInterval(countdown, 1000);
-
-function countdown() {
-    if (timerStartingAt === 0) {
+var countdown = setInterval(function () {
+    if (timerStartingAt === -1) {
         clearInterval(countdown);
+        afterCountdown();
     } else {
-        showCountdown.innerHTML = 'Tra ' + timerStartingAt-- + ' secondi dovrai inserire i numeri.';
+        showCountdown.innerHTML = 'Tra ' + timerStartingAt-- + ' secondi dovrai inserire i numeri della lista.';
     }
+}, 1000);
+
+function afterCountdown() {
+    //=ASKING USER TO PUT THE RIGHT NUMBERS.
+    var userNumbers = [];
+    var rightUserNumbers = [];
+    var remembered = 0;
+    for (i = 0; i < maxElements; i++) {
+        var askUser = parseInt(prompt('Inserisci un numero della lista ' + (i + 1) + '/' + maxElements));
+
+        if (numbersList.includes(askUser)) {
+            rightUserNumbers.push(askUser);
+            remembered++;
+        }
+        userNumbers.push(askUser);
+    }
+
+    var message;
+
+    if (remembered == 0) {
+        message = '. Non ti sei ricordato nessun numero.';
+    } else if (remembered == 5) {
+        message = '. Complimenti! Ti sei ricordato tutti i numeri.';
+    } else {
+        message = '. Mentre quelli che hai indovinato sono: ' + rightUserNumbers + '.'
+    }
+
+
+    console.log(rightUserNumbers);
+    alert('Ti sei ricordato ' + remembered + ' numeri su ' + maxElements + '. I numeri della lista erano: '
+        + numbersList + '. Invece i numeri che tu hai inserito sono: ' + userNumbers
+        + message);
 }
-
-
-
-
-
