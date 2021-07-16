@@ -1,3 +1,7 @@
+var timerStartingAt;
+
+var showCountdown = document.getElementById('reverse-timer');
+
 const numbersList = [];
 console.log(numbersList);
 
@@ -15,3 +19,15 @@ function pushRandomNumbers(nlist) {//^PUSHING RANDOM NUMBERS INSIDE THE ARRAY.
 
 console.log(numbersList);
 alert('Ricordati questi numeri: ' + numbersList + '.');
+
+timerStartingAt = 30;
+
+showCountdown.innerHTML = timerStartingAt--;
+
+var countdown = setInterval(function () {
+    if (timerStartingAt === 0) {
+        clearInterval(countdown);
+    } else {
+        showCountdown.innerHTML = timerStartingAt--;
+    }
+}, 1000);
