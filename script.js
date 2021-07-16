@@ -14,3 +14,4 @@ function pushRandomNumbers(nlist) {//^PUSHING RANDOM NUMBERS INSIDE THE ARRAY.
 };
 
 console.log(numbersList);
+alert('Ricordati questi numeri: ' + numbersList + '.');
