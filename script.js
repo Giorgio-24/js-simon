@@ -8,7 +8,6 @@ var maxGenerableNumber = 100;//^MAX NUMBER THAT CAN BE GENERATE FROM MATH.RANDOM
 var showCountdown = document.getElementById('reverse-timer');
 
 const numbersList = [];
-console.log(numbersList);
 
 pushRandomNumbers(numbersList);
 
@@ -32,21 +31,21 @@ showCountdown.innerHTML = 'Tra ' + timerStartingAt-- + ' secondi dovrai inserire
 var countdown = setInterval(function () {
     if (timerStartingAt === -1) {
         clearInterval(countdown);
-        afterCountdown();
+        afterCountdown(maxElements, maxGenerableNumber);
     } else {
         showCountdown.innerHTML = 'Tra ' + timerStartingAt-- + ' secondi dovrai inserire i numeri della lista.';
     }
 }, 1000);
 
-function afterCountdown() {
+function afterCountdown(maximum, maxRandom) {
     //=ASKING USER TO PUT THE RIGHT NUMBERS.
     var userNumbers = [];
     var rightUserNumbers = [];
     var remembered = 0;
-    for (i = 0; i < maxElements; i++) {
+    for (var i = 0; i < maximum; i++) {
         do {
-            var askUser = parseInt(prompt('Inserisci un numero della lista ' + (i + 1) + '/' + maxElements));
-        } while (!(askUser) || isNaN(askUser) || askUser > maxGenerableNumber || askUser < 1 || userNumbers.includes(askUser));
+            var askUser = parseInt(prompt('Inserisci un numero della lista ' + (i + 1) + '/' + maximum));
+        } while (!(askUser) || isNaN(askUser) || askUser > maxRandom || askUser < 1 || userNumbers.includes(askUser));
         if (numbersList.includes(askUser)) {
             rightUserNumbers.push(askUser);
             remembered++;
@@ -58,7 +57,7 @@ function afterCountdown() {
 
     if (remembered == 0) {
         message = '. Non ti sei ricordato nessun numero.';
-    } else if (remembered == 5) {
+    } else if (remembered == maximum) {
         message = '. Complimenti! Ti sei ricordato tutti i numeri.';
     } else {
         message = '. Mentre quelli che hai indovinato sono: ' + rightUserNumbers + '.'
@@ -66,7 +65,7 @@ function afterCountdown() {
 
 
     console.log(rightUserNumbers);
-    alert('Ti sei ricordato ' + remembered + ' numeri su ' + maxElements + '. I numeri della lista erano: '
+    alert('Ti sei ricordato ' + remembered + ' numeri su ' + maximum + '. I numeri della lista erano: '
         + numbersList + '. Invece i numeri che tu hai inserito sono: ' + userNumbers
         + message);
 }
